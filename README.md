@@ -6,18 +6,18 @@
 
 * 请统一使用默认的 8080 端口，无需使用 HTTPS；
 * 需编写尽可能完善的自动化测试；
-* 数据库使用 MySQL 5.7，测试数据库使用 H2；
+* 数据库使用 MySQL 5.7，测试数据库使用 H2。均使用默认端口；
 * 不需要实现为 HATEOAS；
 
 在最终提交前，请使用 `curl` 或 `Postman` 进行充分测试，并与自己实现的前端 app 进行联调，确保整体工作正常。
 
 ## 术语表
 
-| 中文          | 英文               |
-| ------------------ | ------------------ |
-| 讲师            | trainer               |
-| 学员        | trainee             |
-| 组           | group            |
+| 中文 | 英文    |
+| ---- | ------- |
+| 讲师 | trainer |
+| 学员 | trainee |
+| 组   | group   |
 
 ## API 列表
 
@@ -53,13 +53,14 @@ GET /trainees?grouped=false
 
 查询成功会返回 trainee 的 list，如果没有未分组的学员，则返回 `[]`：
 
-| 字段:类型          | 说明               |
-| ------------------ | ------------------ |
-| id:long            | ID。               |
-| name:string        | 名字。             |
-| office:string        | 办公室。             |
-| email:string        | 邮箱地址。             |
-| zoomId:string        | 个人 Zoom Meeting ID。             |
+| 字段:类型     | 说明                   |
+| ------------- | ---------------------- |
+| id:long       | ID。                   |
+| name:string   | 名字。                 |
+| office:string | 办公室。               |
+| email:string  | 邮箱地址。             |
+| github:string | github 用户名。        |
+| zoomId:string | 个人 Zoom Meeting ID。 |
 
 #### EXAMPLE
 
@@ -71,6 +72,7 @@ $ curl 'localhost:8080/trainees?grouped=false'
         "name": "Foo",
         "office": "西安",
         "email": "foo@thoughtworks.com",
+        "github": "foo",
         "zoomId": "foo"
     },
     {
@@ -78,6 +80,7 @@ $ curl 'localhost:8080/trainees?grouped=false'
         "name": "Bar",
         "office": "北京",
         "email": "bar@thoughtworks.com",
+        "github": "bar",
         "zoomId": "bar"
     }
 ]
@@ -91,12 +94,13 @@ POST /trainees
 
 #### REQUEST
 
-| 字段:类型      | 校验要求 | 说明               |
-| --------------|---- | ------------------ |
-| name:string   | 非空 | 名字。             |
-| office:string | 非空 | 办公室。             |
-| email:string  | 非空且为合法邮箱地址 | 邮箱地址。|
-| zoomId:string | 非空 | 个人 Zoom Meeting ID。 |
+| 字段:类型     | 校验要求             | 说明                   |
+| ------------- | -------------------- | ---------------------- |
+| name:string   | 非空                 | 名字。                 |
+| office:string | 非空                 | 办公室。               |
+| email:string  | 非空且为合法邮箱地址 | 邮箱地址。             |
+| github:string | 非空                 | github 用户名。        |
+| zoomId:string | 非空                 | 个人 Zoom Meeting ID。 |
 
 #### RESPONSE
 
@@ -112,12 +116,13 @@ POST /trainees
 
 创建成功的 trainee 资源。
 
-| 字段:类型      | 说明               |
-| --------------|------------------ |
-| id:long       | ID。               |
-| name:string   | 名字。             |
-| office:string | 办公室。             |
-| email:string  | 邮箱地址。          |
+| 字段:类型     | 说明                   |
+| ------------- | ---------------------- |
+| id:long       | ID。                   |
+| name:string   | 名字。                 |
+| office:string | 办公室。               |
+| email:string  | 邮箱地址。             |
+| github:string | github 用户名。        |
 | zoomId:string | 个人 Zoom Meeting ID。 |
 
 #### EXAMPLE
@@ -129,6 +134,7 @@ $ curl -v -H "Content-Type: application/json" --data @trainee.json localhost:808
     "name": "Foo",
     "office": "西安",
     "email": "foo@thoughtworks.com",
+    "github": "foo",
     "zoomId": "foo"
 }
 ```
@@ -141,9 +147,9 @@ DELETE /trainees/{trainee_id}
 
 #### REQUEST
 
-| 字段:类型      | 说明                |
-| --------------| ------------------ |
-| trainee_id:long | Trainee ID。     |
+| 字段:类型       | 说明         |
+| --------------- | ------------ |
+| trainee_id:long | Trainee ID。 |
 
 #### RESPONSE
 
@@ -181,10 +187,10 @@ GET /trainers?grouped=false
 
 查询成功会返回 trainer 的 list，如果没有未分组的讲师，则返回 `[]`：
 
-| 字段:类型          | 说明               |
-| ------------------ | ------------------ |
-| id:long            | ID。               |
-| name:string        | 名字。             |
+| 字段:类型   | 说明   |
+| ----------- | ------ |
+| id:long     | ID。   |
+| name:string | 名字。 |
 
 #### EXAMPLE
 
@@ -210,9 +216,9 @@ POST /trainers
 
 #### REQUEST
 
-| 字段:类型      | 校验要求 | 说明            |
-| --------------|---- | ------------------ |
-| name:string   | 非空 | 名字。              |
+| 字段:类型   | 校验要求 | 说明   |
+| ----------- | -------- | ------ |
+| name:string | 非空     | 名字。 |
 
 #### RESPONSE
 
@@ -228,10 +234,10 @@ POST /trainers
 
 创建成功的 trainer 资源。
 
-| 字段:类型      | 说明               |
-| --------------|------------------- |
-| id:long       | ID。               |
-| name:string   | 名字。             |
+| 字段:类型   | 说明   |
+| ----------- | ------ |
+| id:long     | ID。   |
+| name:string | 名字。 |
 
 #### EXAMPLE
 
@@ -251,9 +257,9 @@ DELETE /trainers/{trainer_id}
 
 #### REQUEST
 
-| 字段:类型      | 说明                |
-| --------------| ------------------ |
-| trainer_id:long | Trainer ID。     |
+| 字段:类型       | 说明         |
+| --------------- | ------------ |
+| trainer_id:long | Trainer ID。 |
 
 #### RESPONSE
 
@@ -289,10 +295,10 @@ GET /groups
 
 查询成功会返回 group 的 list，如果没有分组，则返回 `[]`：
 
-| 字段:类型      | 说明               |
-| --------------|------------------- |
-| id:long       | ID。               |
-| name:string   | 分组名字。           |
+| 字段:类型     | 说明                   |
+| ------------- | ---------------------- |
+| id:long       | ID。                   |
+| name:string   | 分组名字。             |
 | trainers:list | 分组内包含的讲师列表。 |
 | trainees:list | 分组内包含的学员列表。 |
 
@@ -320,6 +326,7 @@ $ curl localhost:8080/groups
                 "name": "Foo",
                 "office": "西安",
                 "email": "foo@thoughtworks.com",
+                "github": "foo",
                 "zoomId": "foo"
             }
         ]
@@ -343,6 +350,7 @@ $ curl localhost:8080/groups
                 "name": "Bar",
                 "office": "北京",
                 "email": "bar@thoughtworks.com",
+                "github": "bar",
                 "zoomId": "bar"
             }
         ]
@@ -370,10 +378,10 @@ POST /groups/auto-grouping
 
 分组成功会返回 group 的 list：
 
-| 字段:类型      | 说明               |
-| --------------|------------------- |
-| id:long       | ID。               |
-| name:string   | 分组名字。           |
+| 字段:类型     | 说明                   |
+| ------------- | ---------------------- |
+| id:long       | ID。                   |
+| name:string   | 分组名字。             |
 | trainers:list | 分组内包含的讲师列表。 |
 | trainees:list | 分组内包含的学员列表。 |
 
@@ -401,6 +409,7 @@ $ curl -X POST localhost:8080/groups/auto-grouping
                 "name": "Foo",
                 "office": "西安",
                 "email": "foo@thoughtworks.com",
+                "github": "foo",
                 "zoomId": "foo"
             }
         ]
@@ -424,6 +433,7 @@ $ curl -X POST localhost:8080/groups/auto-grouping
                 "name": "Bar",
                 "office": "北京",
                 "email": "bar@thoughtworks.com",
+                "github": "bar",
                 "zoomId": "bar"
             }
         ]
@@ -439,9 +449,9 @@ PATCH /groups/{group_id}
 
 #### REQUEST
 
-| 字段:类型      | 校验要求     | 说明                |
-| ------------- | ----------- | ------------------ |
-| name:string   | 非空，且不重复 | 新的分组名称。        |
+| 字段:类型   | 校验要求       | 说明           |
+| ----------- | -------------- | -------------- |
+| name:string | 非空，且不重复 | 新的分组名称。 |
 
 #### RESPONSE
 
@@ -475,17 +485,17 @@ $ curl -X PATCH --data '{"name": "new name"}' -H "Content-Type: application/json
 | ------------------- | -------------------------------------------------------- |
 | 200 - OK            | 查询操作一切正常，返回 200 及查询结果。                  |
 | 201 - Created       | 创建操作成功，返回 201。                                 |
-| 204 - No Content    | 用于 DELETE 或 某些 POST 等操作无返回数据时。                        |
+| 204 - No Content    | 用于 DELETE 或 某些 POST 等操作无返回数据时。            |
 | 400 - Bad Request   | 请求参数不符合要求，通常是因为参数格式不正确或参数缺失。 |
 | 404 - Not Found     | 请求的资源不存在。                                       |
-| 500 - Server Errors | 请求在处理时遇到服务器错误。                                   |
+| 500 - Server Errors | 请求在处理时遇到服务器错误。                             |
 
 除了返回对应的 status code 外，对于出错的情况，还需返回 Error 对象，字段如下：
 
-| 字段:类型        | 说明                                                         |
-| ---------------- | ------------------------------------------------------------ |
-| message:string   | 错误提示信息，内容可以自行编写，表意即可。如：Cannot find basic info of person with id is 666. |
-| details:map      | 字段校验失败时，需要将出错的字段及其错误信息通过该字段提供。其它情况下该字段不必返回。|
+| 字段:类型      | 说明                                                         |
+| -------------- | ------------------------------------------------------------ |
+| message:string | 错误提示信息，内容可以自行编写，表意即可。如：Cannot find basic info of person with id is 666. |
+| details:map    | 字段校验失败时，需要将出错的字段及其错误信息通过该字段提供。其它情况下该字段不必返回。 |
 
 一个示例如下：
 
