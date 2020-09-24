@@ -23,22 +23,23 @@ public class Trainee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "用户名不为空")
+    @NotNull(message = "name is not null!")
     private String name;
 
-    @NotNull(message = "office不为空")
+    @NotNull(message = "office is not null!")
     private String office;
 
-    @NotNull(message = "email不为空")
+    @NotNull(message = "email is not null!")
     @Email
     private String email;
 
-    @NotNull(message = "github不为空")
+    @NotNull(message = "github is not null!")
     private String github;
 
-    @NotNull(message = "zoomId不为空")
+    @NotNull(message = "zoomId is not null!")
     private String zoomId;
 
     @JsonIgnore
+    @Builder.Default
     private Boolean grouped = false;
 }

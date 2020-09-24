@@ -1,4 +1,5 @@
 package com.example.demo.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,8 @@ public class Trainer {
 
     @NotNull(message = "name is not null！")
     private String name;
+
+    @JsonIgnore
+    @Builder.Default
+    private Boolean grouped = false;
 }
