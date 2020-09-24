@@ -23,8 +23,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TrainerLessTwoException.class)
     public ResponseEntity<ErrorResult> handleUserException(TrainerLessTwoException e) {
-        ErrorResult errorResult = new ErrorResult(HttpStatus.NOT_FOUND.toString(),e.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);
+        ErrorResult errorResult = new ErrorResult(HttpStatus.BAD_REQUEST.toString(),e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
