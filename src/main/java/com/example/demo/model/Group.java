@@ -1,27 +1,27 @@
 package com.example.demo.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.util.List;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Trainer {
+@Entity(name = "study_group")
+public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "name is not null！")
     private String name;
 
-    @JsonIgnore
-    @Builder.Default
-    private Boolean grouped = false;
+    @OneToMany
+    private List<Trainer> trainers;
+
+    @OneToMany
+    private List<Trainee> trainees;
 }
