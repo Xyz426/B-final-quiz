@@ -36,4 +36,8 @@ public class TrainerService {
         }
         return trainer.get();
     }
+
+    public List<Trainer> findAllTrainers() {
+        return trainerRepository.findAll();
+    }
 }

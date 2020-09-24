@@ -21,6 +21,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);
     }
 
+    @ExceptionHandler(TrainerLessTwoException.class)
+    public ResponseEntity<ErrorResult> handleUserException(TrainerLessTwoException e) {
+        ErrorResult errorResult = new ErrorResult(HttpStatus.NOT_FOUND.toString(),e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResult> handleValidationException(MethodArgumentNotValidException e) {
         String message = e.getBindingResult().getFieldError().getDefaultMessage();
