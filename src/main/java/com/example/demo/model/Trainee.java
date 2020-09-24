@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,4 +38,7 @@ public class Trainee {
 
     @NotNull(message = "zoomId不为空")
     private String zoomId;
+
+    @JsonIgnore
+    private Boolean grouped = false;
 }

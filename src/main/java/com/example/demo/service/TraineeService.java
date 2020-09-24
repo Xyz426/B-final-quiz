@@ -32,4 +32,8 @@ public class TraineeService {
         }
         return trainee.get();
     }
+
+    public List<Trainee> findTraineeByGrouped(Boolean grouped) {
+        return traineeRepository.findAllByGrouped(grouped);
+    }
 }

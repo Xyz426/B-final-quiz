@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.*;
 import javax.validation.Valid;
 
 @Controller
@@ -17,6 +18,11 @@ public class TraineeController {
 
     public TraineeController(TraineeService traineeService) {
         this.traineeService = traineeService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Trainee>> getNoGroupTrainees(@RequestParam Boolean grouped){
+        return ResponseEntity.ok(traineeService.findTraineeByGrouped(grouped));
     }
 
     @PostMapping
