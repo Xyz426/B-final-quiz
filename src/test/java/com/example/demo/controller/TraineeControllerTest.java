@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.TraineeNotExistException;
 import com.example.demo.model.Trainee;
 import com.example.demo.service.TraineeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,8 +19,7 @@ import java.util.Collections;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(TraineeController.class)
@@ -45,7 +45,7 @@ public class TraineeControllerTest {
     }
 
     @Test
-    public void should_add_trainee_by_id_when_trainee_id_exist() throws Exception {
+    public void should_return_trainee_when_add_trainee_is_success() throws Exception {
         when(traineeService.addTrainee(trainee)).thenReturn(trainee);
 
         mockMvc.perform(post("/trainees")
@@ -68,4 +68,14 @@ public class TraineeControllerTest {
 
         verify(traineeService).findTraineeByGrouped(false);
     }
+
+    @Test
+    public void should_delete_trainee_when_given_trainer_id_exist() throws Exception {
+        mockMvc.perform(delete("/trainees/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        verify(traineeService).deleteTraineeById(1L);
+    }
+
 }

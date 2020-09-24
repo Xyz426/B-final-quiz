@@ -28,4 +28,9 @@ public class TrainerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(trainerService.addTrainer(trainer));
     }
 
+    @DeleteMapping(path = "/{trainer_id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTraineeById(@PathVariable Long trainer_id){
+        trainerService.deleteTraineeById(trainer_id);
+    }
 }

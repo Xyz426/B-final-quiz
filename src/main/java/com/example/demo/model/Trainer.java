@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotNull(message = "name is not null！")
     private String name;
