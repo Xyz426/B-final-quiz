@@ -40,4 +40,13 @@ public class TrainerService {
     public List<Trainer> findAllTrainers() {
         return trainerRepository.findAll();
     }
+
+    public void setTrainersGroupStatus() {
+        int size = findAllTrainers().size();
+        if(size % 2 == 0){
+            trainerRepository.updateTraineesGroupStatus(size);
+        }else {
+            trainerRepository.updateTraineesGroupStatus(size-1);
+        }
+    }
 }

@@ -35,14 +35,14 @@ public class GroupService {
         List<Trainee> trainees = traineeService.findAllTrainees();
 
         if (trainers.size() % 2 != 0) {
-            trainers.remove(trainees.size() - 1);
+            trainers.remove(trainers.size() - 1);
         }
         Collections.shuffle(trainees);
         Collections.shuffle(trainers);
 
         List<Group> groups = new ArrayList<>();
         for (int i = 0; i < trainers.size() / 2; i++) {
-            groups.add(Group.builder().name(i+1+"组")
+            groups.add(Group.builder().id((long) i+1).name(i+1+"组")
                     .trainers(new ArrayList<>())
                     .trainees(new ArrayList<>())
                     .build());
@@ -53,19 +53,22 @@ public class GroupService {
 
     public List<Group> grouping(List<Group> groups, List<Trainer> trainers
             , List<Trainee> trainees) {
+        groupRepository.deleteAll();
 
         for (int i = 0; i < trainers.size()/2; i++) {
             groups.get(i).getTrainers().add(trainers.get(i));
-            groups.get(i).getTrainers().add(trainers.get(trainers.size()-1));
+            groups.get(i).getTrainers().add(trainers.get(trainers.size()-i-1));
         }
 
         for (int i = 0; i < trainees.size(); i++) {
             groups.get(i % groups.size()).getTrainees().add(trainees.get(i));
         }
 
-        groups.stream().forEach(group -> {
+        groups.forEach(group -> {
             groupRepository.save(group);
         });
+        traineeService.setTraineesGroupStatus();
+        trainerService.setTrainersGroupStatus();
         return groups;
     }
 }

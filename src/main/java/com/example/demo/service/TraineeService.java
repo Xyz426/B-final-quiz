@@ -40,4 +40,8 @@ public class TraineeService {
     public List<Trainee> findAllTrainees() {
         return traineeRepository.findAll();
     }
+
+    public void setTraineesGroupStatus() {
+        traineeRepository.updateTraineesGroupStatus();
+    }
 }
